@@ -57,7 +57,7 @@ wheels = [
 ]
 
 [[package]]
-name = "claude-code-analytics"
+name = "claude-code-marimo"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

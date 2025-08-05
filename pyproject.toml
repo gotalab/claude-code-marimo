@@ -1,5 +1,5 @@
 [project]
-name = "claude-code-analytics"
+name = "claude-code-marimo"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"

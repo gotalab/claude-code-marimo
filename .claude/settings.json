@@ -1,0 +1,99 @@
+{
+    "hooks": {
+      "PreToolUse": [
+        {
+          "matcher": "Bash",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/scripts/enforce-uv.sh"
+            }
+          ]
+        },
+        {
+          "matcher": "Edit|MultiEdit|Write",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "jq -e '.tool_input.file_path | test(\"pyproject\\\\.toml$\")' >/dev/null && echo 'pyproject.tomlへの編集は禁止されています。uv addを使ってライブラリをインストールしてください' >&2 && exit 2 || exit 0"
+            }
+          ]
+        },
+        {
+          "matcher": "Edit|MultiEdit|Write|Update",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/scripts/uv-ruff-mypy.sh"
+            }
+          ]
+        },
+        {
+          "matcher": "Write|Edit|MultiEdit",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "jq -e '.tool_input.file_path | test(\"\\\\.env\")' >/dev/null && echo '.envファイルへの書き込みは禁止されています' >&2 && exit 2 || exit 0"
+            }
+          ]
+        }
+    ],
+      "Stop":[
+        {
+          "matcher": "",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "afplay /System/Library/Sounds/Glass.aiff"
+            }
+          ]
+        }
+      ],
+      "PostToolUse": [
+        {
+          "matcher": "Write|Edit|MultiEdit|Update",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/scripts/uv-ruff-mypy.sh"
+            }
+          ]
+        }
+      ]
+    },
+    "permissions": {
+      "allow": [
+        "Bash(mkdir:*)",
+        "Bash(grep:*)",
+        "Bash(find:*)",
+        "Bash(rm:*)",
+        "Write",
+        "Edit",
+        "MultiEdit",
+        "WebSearch",
+        "WebFetch",
+        "Notebook.*",
+        "mcp__ide__executeCode"
+      ],
+      "deny": [
+        "Bash(sudo:*)",
+        "Bash(rm:*)",
+        "Bash(rm -rf:*)",
+        "Read(.env.*)",
+        "Read(id_rsa)",
+        "Read(id_ed25519)",
+        "Read(**/*token*)",
+        "Read(**/*key*)",
+        "Write(.env*)",
+        "Write(**/secrets/**)",
+        "Bash(curl:*)",
+        "Bash(wget:*)",
+        "Bash(nc:*)",
+        "Bash(npm uninstall:*)",
+        "Bash(npm remove:*)",
+        "Bash(psql:*)",
+        "Bash(mysql:*)",
+        "Bash(mongod:*)"
+      ]
+    }
+  }

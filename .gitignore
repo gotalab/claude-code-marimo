@@ -1,0 +1,53 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Data files
+data/
+*.csv
+*.parquet
+*.xlsx
+*.xls
+*.db
+*.sqlite
+
+# Jupyter/marimo
+.ipynb_checkpoints/
+*.ipynb
+__marimo__/
+# Keep marimo notebooks (*.py)
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific
+*.log
+*.cache
+.coverage
+htmlcov/
+.hypothesis/
+
+# Keep specific files
+!data/.gitkeep
+!data/raw/.gitkeep
+!notebooks/.gitkeep
